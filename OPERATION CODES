@@ -1,5 +1,10 @@
 OPERATION CODES
-
+----------------
+Note: Use full words for readability. To hell with reserved word conflicts
+---------------------
+INSPIRATION: VAX Assembly (See "VAX Assembly Language and Architecture" by Charles Kapps and Robert Stanford, Copyright 1985)
+Reason: CISC can have "two-way" memory access and our instruction widths can be any size we want. Some real instruction sets have been known to be as wide as 50 bytes.
+---------------------
 ADD         000000  ; add A, B => A = A + B
 ADD2        000001  ; add A, B, C => C = A + B 
 SUBTRACT    000010  ; sub A, B => A = A - B
@@ -28,6 +33,13 @@ COMPARE_EQ  010011  ; Checks only that A is equal to B
 BRANCH_AND  010100  ; Branch only if consecutive distinct comparisons are made successfully
 BRANCH      010101  ; Generic branch. Jump only if TF != 0
 -------------------------
+-------------------------
+Binary maths (Optional, but here for completion sake)
+-------------------------
+AND         010110
+XOR         010111
+OR          011000
+XNOR        011001
 
 -------------------------
 ADDRESS MODES
@@ -60,29 +72,21 @@ RV4     1011
 ;; Stack pointer register
 SP      1100
 -------------------------
-;; Boolean register for comparison test results. 8 bits
+;; Boolean register for comparison test results. 8 bits (should we expand that? Change it in any way?)
+;; Pentium has a similar register but I forget what it's called
 TF      1101
+-------------------------
+;; Program counter
+PC      1110
 
 ---------------------------------------------------------------------------
 
 NOTES
 
 CODING SCHEME: big endian
-
----------------------------------------------------------------------------
-
-OPCODE STRUCTURE
-1 arg   = 32 bit instruction
-
-assembly:   OPERATION SOURCE, EXTRA                     //1 arg
-binary:     ADDRESS REG OFFSET
-                        (memory)
-
----------------------------------------------------------------------------
-n args  = 40 bit instruction
-
-assembly:   OPERATION OPERAND, OPERAND, DESTINATION     //n args
-binary:     ADDRESS1 REGISTER1 ADDRESS2 REGISTER2 ADDRESSn REGISTERn OFFSET
-                                                                     (memory)
-
 OFFSET WIDTH: 8 bits (one byte)
+    Reason: Most flexible
+
+---------------------------------------------------------------------------
+
+OPCODE STRUCTURE (Dependent upon the opcode)
