@@ -1,60 +1,67 @@
 OPERATION CODES
 
-ADD			000000
-SUB			000001
-MUL			000010
-DIV			000011
+ADD         000000  ; add A, B => A = A + B
+ADD2        000001  ; add A, B, C => C = A + B 
+SUBTRACT    000010  ; sub A, B => A = A - B
+SUBTRACT2   000011  ; sub A, B, C => C = A - B
+MULTIPLY    000100  ; mul A, B => A = A * B
+MULTIPLY2   000101  ; mul A, B, C => C = A * B
+DIVIDE      000110  ; div A, B => A = A/B
+DIVIDE2     000111  ; div A, B, C => C = A/B
 -------------------------
-MOVE		000100
-JUMP		000101
-CALL		000110
-STK			000111
-POP			001000
+MOVE        001000  ; Moves a value. Zero pads if necessary
+JUMPTO      001001  ; A blind jump to a label or an offset. If a label is given, the assembler figures out the program counter offset
+CALL        001010  ; Push the current program counter onto the stack and go execute a procedure
+STACK       001011  ; Push a (32-bit) value to the top of the stack. Zero-pad it from the left if needed
+RETURN      010110  ; Signifies the end of a procedure
+POP         001100  ; Pops the top of the SP register into the destination
+POPVAL      001101  ; Pops the top of the SP register and moves the value pointed to by the address at the top of the SP register into the destination
 -------------------------
-COMP		001001
-COMP_GT		001010
-COMP_LT		001011
-OMP_GE		001100		
-COMP_LE		001101
-COMP_EQ		001110
+COMPARE     001110  ; General comparison. 
+COMPARE_GT  001111  ; Checks only that A is greater than B
+COMPARE_LT  010000  ; Checks only that A is less than B
+COMPARE_GE  010001  ; Checks only that A is greater than or equal to B
+COMPARE_LE  010010  ; Checks only that A is less than or equal to B
+COMPARE_EQ  010011  ; Checks only that A is equal to B
 -------------------------
-BRANCH_AND	001111
-BRANCH_OR	010000
-BRANCH_GT	010001
-BRANCH_LT	010011
-BRANCH_GE	010100
-BRANCH_LE	010100
-BRANCH_EQ	010101
+; Reset the TF register after every branch instruction, regardless of true or false
+BRANCH_AND  010100  ; Branch only if consecutive distinct comparisons are made successfully
+BRANCH      010101  ; Generic branch. Jump only if TF != 0
 -------------------------
-RET 		010110	; Signifies the end of a procedure
 
-------------------------- -------------------------
+-------------------------
 ADDRESS MODES
 
-REGISTER	000 ; Self-explanatory
-DIRECT		001	; Directly to a variable
-INDEX		010 ; a[3]
-INDIRECT	011 ; Pointer to a pointer (offsets)
-IMMEDIATE 	100	; A constant, like 3
+REGISTER    000 ; Self-explanatory
+DIRECT      001 ; Directly to a variable
+INDEX       010 ; a[3]
+INDIRECT    011 ; Pointer to a pointer (offsets)
+IMMEDIATE   100 ; A constant, like 3. Assumes an 8 bit constant
 --------------------------------------------------
 REGISTERS (32 bits)
 ;; General purpose registers
-GP1		0000
-GP2		0001
-GP3		0010
-GP4		0011
+GP1     0000
+GP2     0001
+GP3     0010
+GP4     0011
 -------------------------
 ;; Registers for procedure arguments
-AR1		0100
-AR2		0101
-AR3		0110
-AR4		0111
+AR1     0100
+AR2     0101
+AR3     0110
+AR4     0111
+-------------------------
+;; Registers for return values
+RV1     1000
+RV2     1001
+RV3     1010
+RV4     1011
 -------------------------
 ;; Stack pointer register
-SP		1000
+SP      1100
 -------------------------
 ;; Boolean register for comparison test results. 8 bits
-TF		1001
+TF      1101
 
 ---------------------------------------------------------------------------
 
@@ -65,15 +72,17 @@ CODING SCHEME: big endian
 ---------------------------------------------------------------------------
 
 OPCODE STRUCTURE
-1 arg 	= 32 bit instruction
+1 arg   = 32 bit instruction
 
-assembly:	OPERATION SOURCE, EXTRA						//1 arg
-binary:		ADDRESS REG OFFSET
-						(memory)
+assembly:   OPERATION SOURCE, EXTRA                     //1 arg
+binary:     ADDRESS REG OFFSET
+                        (memory)
 
 ---------------------------------------------------------------------------
-n args 	= 40 bit instruction
+n args  = 40 bit instruction
 
-assembly: 	OPERATION OPERAND, OPERAND, DESTINATION		//n args
-binary:		ADDRESS1 REGISTER1 ADDRESS2 REGISTER2 ADDRESSn REGISTERn OFFSET
-																	 (memory)
+assembly:   OPERATION OPERAND, OPERAND, DESTINATION     //n args
+binary:     ADDRESS1 REGISTER1 ADDRESS2 REGISTER2 ADDRESSn REGISTERn OFFSET
+                                                                     (memory)
+
+OFFSET WIDTH: 8 bits (one byte)
