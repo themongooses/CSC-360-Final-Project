@@ -22,3 +22,6 @@ branch_and cond1_true
 There are two `BRANCH*` operations, `BRANCH` and `BRANCH_AND`. `BRANCH` is successful only if the TF register is not 0. `BRANCH_AND` is successful only if the `and` bit is set in TF, which is only true if more than one back-to-back specific comparisons are made. TF is reset after a `BRANCH*` method is executed.
 
 This is a CISC architecture. Full two-way access directly to memory. This means that it is possible to read directly from memory and write directly back to memory in a single instruction. To simplify instruction parsing and coding, each opcode has its own structure, though they may follow a general pattern. For example, there are two versions of `ADD`: `ADD` and `ADD2`. `ADD` takes two arguments, with the only restriction being that the first MUST be a writeable location (memory or register). Alternatively, `ADD2` takes in 3 arguments, with the restriction that the third argument MUST be a writeable location.
+
+Memory is accessed directly by typing the register or the memory variable. To get the offset of a variable, use brackets [] around it. For example, if `foo` is a 32 bit DWORD stored at `0x3000h` with a value of `7657`, then `move GP1, foo` will update `GP1` with the value of `7657`. Conversely, if one were to write `move GP1, [foo]`, then `GP1` would update with the value of `0x3000h`, the memory address of `foo`.
+
