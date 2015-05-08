@@ -19,5 +19,6 @@ compare_le plain, 'x'
 branch_and cond1_true
 ```
 
-There are two `BRANCH*` operations, `BRANCH` and `BRANCH_AND`. `BRANCH`
-This is a CISC architecture. Full two-way access directly to memory
+There are two `BRANCH*` operations, `BRANCH` and `BRANCH_AND`. `BRANCH` is successful only if the TF register is not 0. `BRANCH_AND` is successful only if the `and` bit is set in TF, which is only true if more than one back-to-back specific comparisons are made. TF is reset after a `BRANCH*` method is executed.
+
+This is a CISC architecture. Full two-way access directly to memory. This means that it is possible to read directly from memory and write directly back to memory in a single instruction. To simplify instruction parsing and coding, each opcode has its own structure, though they may follow a general pattern. For example, there are two versions of `ADD`: `ADD` and `ADD2`. `ADD` takes two arguments, with the only restriction being that the first MUST be a writeable location (memory or register). Alternatively, `ADD2` takes in 3 arguments, with the restriction that the third argument MUST be a writeable location.
