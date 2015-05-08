@@ -6,7 +6,7 @@ average DWORD ?
 [Address: 0x5000]
 0000000000000000
 
-prompt BYTE "ENter a non-negative integer: ",0
+prompt BYTE "Enter a non-negative integer: ",0
 [Address: 0x6000]
 
 message BYTE "Average= ",0
