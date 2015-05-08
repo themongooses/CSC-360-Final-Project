@@ -1,7 +1,6 @@
 ; Have the user enter in 10 non-negative integers and sum up those non-negative integers
 ; and find the average
 .data
-array DWORD ?10     ;Array of 10 integers
 sum DWORD ?
 average DWORD ?
  
