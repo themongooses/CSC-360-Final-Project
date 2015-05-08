@@ -1,0 +1,120 @@
+ENCODE PROC (only the body)
+
+move 0, TF
+000100 01 00000000000000000000000000000000 00 1001
+
+comp_ge plain, 'a'
+001100 11 ["plain" var address here] 01	00000000000000000000000001011100
+
+comp_le plain, 'x'
+001101 11 ["plain" var address here] 01 00000000000000000000000001111000
+
+branch_and cond1_true
+001111 00000000000000000000000000001000
+
+move 0, TF
+000100 01 00000000000000000000000000000000 00 1001
+
+comp_ge plain, 'A'
+001100 11 ["plain" var address here] 01	00000000000000000000000001000001
+
+comp_le plain 'X'
+001100 11 ["plain" var address here] 01	00000000000000000000000001011000
+
+branch_and cond1_true
+001111 00000000000000000000000000001000
+
+move 0, TF
+000100 01 00000000000000000000000000000000 00 1001
+
+jump else_L
+000101 00000000000000000000000000000101
+
+add plain, 2, GP4
+000000 11 ["plain" var address here] 01 00000000000000000000000000000010 00 0011
+
+move GP4, plain
+000100 00 0011 11 ["plain" var address here]
+
+jump end_proc
+000101 00000000 00000000 00000000 00001011
+
+comp_eq plain, 'y'
+001110 11 ["plain" var address here] 01 00000000000000000000000001111001
+
+comp_eq plain, 'z'
+001110 11 ["plain" var address here] 01 00000000000000000000000001111010
+
+comp_eq plain, 'Y'
+001110 11 ["plain" var address here] 01 00000000000000000000000001011001
+
+comp_eq plain, 'Z'
+001110 11 ["plain" var address here] 01 00000000000000000000000001011010
+
+branch_or cond2_else
+010000 00000000000000000000000000000011
+
+jump end_proc
+000101 00000000000000000000000000000101
+
+move 0, TF
+000100 01 00000000000000000000000000000000 00 1001
+
+sub plain, 24, GP4
+000001 11 ["plain" var address here] 01 00000000000000000000000000011000 00 0011
+
+move GP4, plain
+000100 00 0011 11 ["plain" var address here]
+
+move plain, code
+000100 11 ["plain" var address here] 11 ["code" var address here]
+
+STK code
+000111 11 ["code" var address here]
+
+
+.run -------------------------
+move [prompt], AR1
+000100 10 ["prompt" var address here] 00 0100			//index addressing???
+
+call WriteString
+000110 [WriteString proc]								//ask about WriteString
+
+call GetString
+000100 [GetString proc]									//ask about GetString
+
+POP buff
+001000 ["buf" address here]
+
+move [prompt], GP1
+000100 10 ["prompt" var address here] 00 0000			//index addressing???
+
+move buff[GP1], plain
+000100 01 ["buff" var address here + val of GP1]		//ask
+
+call encode
+000110 [encode proc]
+
+POP buff[GP1]
+001000 [address of value at buff[GP1]]
+
+comp 0, buff[GP1]
+001001 01 00000000000000000000000000000000 [insert address mode] [insert buff[GP1]]
+
+branch_eq end_of_loop
+010101 00000000000000000000000000000100
+
+add GP1, 1, GP1
+000000 00 0000 01 00000000000000000000000000000000 00 0000
+
+jump top_loop
+000101 111111111111111111111001
+
+move [message], AR1
+000100 10 ["message" var address here] 00 0100
+
+call WriteString
+000110 [WriteString proc]							//WriteString???
+
+move [buff], AR1
+000100 [value of buff] 00 
