@@ -1,0 +1,73 @@
+OPERATION CODES
+
+ADD			000000
+SUB			000001
+MUL			000010
+DIV			000011
+-------------------------
+MOVE		000100
+JUMP		000101
+CALL		000110
+STK			000111
+POP			001000
+-------------------------
+COMP		001001
+COMP_GT		001010
+COMP_LT		001011
+OMP_GE		001100		
+COMP_LE		001101
+COMP_EQ		001110
+-------------------------
+BRANCH_AND	001111
+BRANCH_OR	010000
+BRANCH_GT	010001
+BRANCH_LT	010011
+BRANCH_GE	010100
+BRANCH_LE	010100
+BRANCH_EQ	010101
+
+------------------------- -------------------------
+ADDRESS MODES
+
+REGISTER	00
+DIRECT		01
+INDEX		10
+INDIRECT	11
+--------------------------------------------------
+REGISTERS (1
+
+GP1		0000
+GP2		0001
+GP3		0010
+GP4		0011
+-------------------------
+AR1		0100
+AR2		0101
+AR3		0110
+AR4		0111
+-------------------------
+SP		1000
+-------------------------
+TF		1001
+
+---------------------------------------------------------------------------
+
+NOTES
+
+CODING SCHEME: big endian
+
+---------------------------------------------------------------------------
+
+OPCODE STRUCTURE
+1 arg 	= 32 bit instruction
+
+assembly:	OPERATION SOURCE, EXTRA						//1 arg
+binary:		ADDRESS REG OFFSET
+						(memory)
+
+---------------------------------------------------------------------------
+n args 	= 40 bit instruction
+
+assembly: 	OPERATION OPERAND, OPERAND, DESTINATION		//n args
+binary:		ADDRESS1 REGISTER1 ADDRESS2 REGISTER2 ADDRESSn REGISTERn OFFSET
+																	 (memory)
