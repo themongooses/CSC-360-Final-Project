@@ -1,0 +1,16 @@
+NOTES
+CODING SCHEME: big endian
+---------------------------------------------------------------------------
+OPCODE STRUCTURE
+1 arg 	= 32 bit instruction
+
+assembly:	OPERATION SOURCE, EXTRA						//1 arg
+binary:		ADDRESS REG OFFSET
+						(memory)
+---------------------------------------------------------------------------
+n args 	= 40 bit instruction
+assembly: 	OPERATION OPERAND, OPERAND, DESTINATION		//n args
+binary:		ADDRESS1 REGISTER1 ADDRESS2 REGISTER2 ADDRESSn REGISTERn OFFSET
+																	 (memory)
+
+LINE 23: fix "cond" typo
