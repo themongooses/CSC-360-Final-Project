@@ -5,14 +5,14 @@ Note: Use full words for readability. To hell with reserved word conflicts
 INSPIRATION: VAX Assembly (See "VAX Assembly Language and Architecture" by Charles Kapps and Robert Stanford, Copyright 1985)
 Reason: CISC can have "two-way" memory access and our instruction widths can be any size we want. Some real instruction sets have been known to be as wide as 50 bytes.
 ---------------------
-ADD         000000  ; add A, B => A = A + B
-ADD2        000001  ; add A, B, C => C = A + B 
-SUBTRACT    000010  ; sub A, B => A = A - B
-SUBTRACT2   000011  ; sub A, B, C => C = A - B
-MULTIPLY    000100  ; mul A, B => A = A * B
-MULTIPLY2   000101  ; mul A, B, C => C = A * B
-DIVIDE      000110  ; div A, B => A = A/B
-DIVIDE2     000111  ; div A, B, C => C = A/B
+ADD         000000  ; add A, B      => A = A + B
+ADD2        000001  ; add A, B, C   => C = A + B 
+SUBTRACT    000010  ; sub A, B      => A = A - B
+SUBTRACT2   000011  ; sub A, B, C   => C = A - B
+MULTIPLY    000100  ; mul A, B      => A = A * B
+MULTIPLY2   000101  ; mul A, B, C   => C = A * B
+DIVIDE      000110  ; div A, B      => A = A / B
+DIVIDE2     000111  ; div A, B, C   => C = A / B
 -------------------------
 MOVE        001000  ; Moves a value. Zero pads if necessary
 JUMPTO      001001  ; A blind jump to a label or an offset. If a label is given, the assembler figures out the program counter offset
@@ -73,7 +73,7 @@ RV4     1011
 SP      1100
 -------------------------
 ;; Boolean register for comparison test results. 8 bits (should we expand that? Change it in any way?)
-;; Pentium has a similar register but I forget what it's called
+;; Kinda like the Itanium's predicate registers, but not as snazzy
 TF      1101
 -------------------------
 ;; Program counter
