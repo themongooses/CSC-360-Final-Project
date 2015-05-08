@@ -25,29 +25,35 @@ BRANCH_LT	010011
 BRANCH_GE	010100
 BRANCH_LE	010100
 BRANCH_EQ	010101
+-------------------------
+RET 		010110	; Signifies the end of a procedure
 
 ------------------------- -------------------------
 ADDRESS MODES
 
-REGISTER	00
-DIRECT		01
-INDEX		10
-INDIRECT	11
+REGISTER	000 ; Self-explanatory
+DIRECT		001	; Directly to a variable
+INDEX		010 ; a[3]
+INDIRECT	011 ; Pointer to a pointer (offsets)
+IMMEDIATE 	100	; A constant, like 3
 --------------------------------------------------
-REGISTERS (1
-
+REGISTERS (32 bits)
+;; General purpose registers
 GP1		0000
 GP2		0001
 GP3		0010
 GP4		0011
 -------------------------
+;; Registers for procedure arguments
 AR1		0100
 AR2		0101
 AR3		0110
 AR4		0111
 -------------------------
+;; Stack pointer register
 SP		1000
 -------------------------
+;; Boolean register for comparison test results. 8 bits
 TF		1001
 
 ---------------------------------------------------------------------------

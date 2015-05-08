@@ -1,5 +1,22 @@
+sum DWORD ?
+[Address: 0x4000]
+0000000000000000
+
+average DWORD ?
+[Address: 0x5000]
+0000000000000000
+
+prompt BYTE "ENter a non-negative integer: ",0
+[Address: 0x6000]
+
+message BYTE "Average= ",0
+[Address: 0x7000]
+
 move 0, GP4
 000100 01 00000000000000000000000000000000
+
+move [prompt], AR1
+000100 10 0x6000 00 0100
 
 call WriteString
 
@@ -9,10 +26,10 @@ POP GP1
 00100 00 0000
 
 move sum, GP2
-000100 11 [address for sum] 00 0001
+000100 11 0x4000 00 0001
 
 add GP2, GP1, sum
-000000 00 0001 00 0000 11 [address for sum]
+000000 00 0001 00 0000 11 0x4000
 
 add GP4, 1, GP4
 000000 00 0011 11 00000000000000000000000000000001 00 0011
@@ -24,17 +41,17 @@ branch_lt top_loop
 010011 11111111111111111111111111111000
 
 move sum, GP2
-000100 11 [address for sum] 00 0001
+000100 11 0x4000 00 0001
 
 div GP2, 10, average
 000011 00 0001 11 00000000000000000000000000001010
 
 move [message], AR1
-000100 10 [address for message] 00 0100
+000100 10 0x7000 00 0100
 
 call WriteString
 
 move [average], AR1
-000100 10 [address for average] 00 0100
+000100 10 0x5000 00 0100
 
 call WriteInt
