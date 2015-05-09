@@ -83,7 +83,7 @@ PC      1110
 
 NOTES
 
-CODING SCHEME: big endian
+CODING SCHEME: big endian. Because it just makes sense
 OFFSET WIDTH: 8 bits (one byte)
     Reason: Most flexible
 
