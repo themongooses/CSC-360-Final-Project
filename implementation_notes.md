@@ -6,7 +6,7 @@ Define procedures in `.code` sections. Loose code goes in the `.run` section. Th
 
 It has relative position branching. For example, when you encounter a `JUMPTO` or `BRANCH` command, the way the jump is calculated is with a program counter offset. This is easier to calculate for the majority of reasons you'd use a jump or branch (to a label). So when a branch or jump succeeds (jumps always succeed), take the current Program Counter, add the offset to it, then resume execution at the new Program Counter location
 
-It has absolute procedure calling. For example, if upon assembly, procedure `FOO` is created and stored into memory at 0x6000, then an instruction `call FOO` will look like this: `001010 110000000000000`. When executing the instruction, the current Program Counter is saved on the stack, and the address of the procedure is written to the Program Counter. When the procedure is done, marked by the instruction `RETURN` (`010110`), then the old Program Counter value is popped off the stack back onto the Program Counter register. The program then resumes execution as normal.
+It has absolute procedure calling. For example, if upon assembly, procedure `FOO` is created and stored into memory at 0x6000, then an instruction `call FOO` will look like this: `001010 00000000000000000110000000000000`. When executing the instruction, the current Program Counter is saved on the stack, and the address of the procedure is written to the Program Counter. When the procedure is done, marked by the instruction `RETURN` (`010110`), then the old Program Counter value is popped off the stack back onto the Program Counter register. The program then resumes execution as normal.
 
 List/Explaination of Registers
 ==============================
