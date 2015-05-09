@@ -1,8 +1,8 @@
-Define procedures in .code sections. Loose code goes in the .run section. This is to seperate the procedure logic from the main logic tying them together. 
+The point of this language is to make assembly easy to write and read. Inspiration is taken from MIPS and its simplicity, which is why it's used to teach computer architecture
 
-32 bit memory width, with an offset with of 8 bits. This makes reading the majority of data easy.
+Define procedures in `.code` sections. Loose code goes in the `.run` section. This is to seperate the procedure logic from the main logic tying them together. When the program is executed, execution starts on the first line after `.run` and continues until there are no more instructions to execute (the compiler automatically inserts a return at the end)
 
-The point of this language is to make assembly easy to write and read
+32 bit memory width, with an offset width of 8 bits. This makes reading the majority of data easy. This means that for every 1 offset, 8 bits are offset for the current value.
 
 It has relative position branching. For example, when you encounter a `JUMPTO` or `BRANCH` command, the way the jump is calculated is with a program counter offset. This is easier to calculate for the majority of reasons you'd use a jump or branch (to a label). So when a branch or jump succeeds (jumps always succeed), take the current Program Counter, add the offset to it, then resume execution at the new Program Counter location
 
