@@ -18,7 +18,7 @@ message BYTE "Average= ",0
         add GP4, 1  ; increment the loop counter
         compare_lt GP4, 9 ; Check for loop bounds
         branch top_loop ; Relative label addressing
-        div2 sum, 10, average ; Do an integer division operation of average=sum/10
+        divide2 sum, 10, average ; Do an integer division operation of average=sum/10
         move [message], AR1 ; 
         call WriteString    ; Assuming built-in method
         move [average], AR1

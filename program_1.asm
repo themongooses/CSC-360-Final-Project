@@ -74,7 +74,7 @@
 	    jumpto top_loop
 	end_of_loop:
 	; Print out the encoded string
-	move [message], AR1
+	move [msg], AR1
 	call WriteString
 	move [buff], AR1
 	call WriteString
